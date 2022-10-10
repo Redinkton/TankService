@@ -23,9 +23,9 @@ namespace MyTank.Services
 
         private void DoWork(object? state)
         {
-            var a = _context.Tanks.ToList();
+            var allList = _context.Tanks.ToList();
             Random rnd = new();
-            foreach (var item in a)
+            foreach (var item in allList)
             {
                 item.CurrentVolume = rnd.Next(item.MinVolume, item.MaxVolume);
                 _context.SaveChanges();
