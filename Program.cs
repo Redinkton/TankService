@@ -10,7 +10,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddSqlite<TankContext>("Data Source=MyTank.db");
 
 builder.Services.AddScoped<TankService>();
-//builder.Services.AddHostedService<TimedHostedService>();
+builder.Services.AddHostedService<TimedHostedService>();
 
 
 var app = builder.Build();
