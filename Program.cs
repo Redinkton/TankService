@@ -1,3 +1,5 @@
+using Microsoft.Extensions.DependencyInjection.Extensions;
+using Microsoft.Extensions.Hosting;
 using MyTank.Data;
 using MyTank.Services;
 
@@ -9,8 +11,11 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddSqlite<TankContext>("Data Source=MyTank.db");
 
+
 builder.Services.AddScoped<IScopedProcessingService, DefaultScopedProcessingService>();
-builder.Services.AddHostedService<ScopedBackgroundService>();
+//builder.Services.AddHostedService<ScopedBackgroundService>();
+
+builder.Services.TryAddEnumerable(ServiceDescriptor.Singleton<IHostedService, ScopedBackgroundService>());
 
 builder.Services.AddScoped<TankService>();
 
@@ -33,3 +38,4 @@ app.MapControllers();
 app.CreateDbIfNotExists();
 
 app.Run();
+
