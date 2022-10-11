@@ -21,7 +21,7 @@ namespace MyTank.Services
                     item.CurrentVolume = rnd.Next(item.MinVolume, item.MaxVolume);
                     _context.SaveChanges();
                 }
-                await Task.Delay(60_000, stoppingToken);
+                await Task.Delay(10_000, stoppingToken);
             }
         }
     }

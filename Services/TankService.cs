@@ -1,6 +1,7 @@
 using MyTank.Models;
 using MyTank.Data;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace MyTank.Services;
 
@@ -13,11 +14,11 @@ public class TankService
         _context = context;
     }
 
-    public IEnumerable<Tank> GetAll()
+    public Task<List<Tank>> GetAll()
     {
         return _context.Tanks
             .AsNoTracking()
-            .ToList();
+            .ToListAsync();
     }
 
     public Tank? GetById(int id)
@@ -41,13 +42,11 @@ public class TankService
 
         if (tankToUpdate is null)
         {
-            throw new NullReferenceException("Not exist");
+            throw new InvalidOperationException("Not exist");
         }
         tankToUpdate.CurrentVolume = currentVolume;
         _context.SaveChanges();
     }
-
-
 
     public void DeleteById(int id)
     {
