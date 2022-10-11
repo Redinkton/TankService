@@ -18,7 +18,7 @@ public class TankController : ControllerBase
      
 
     [HttpGet]
-    public IEnumerable<Tank> GetAll()
+    public Task<List<Tank>> GetAll()
     {
         return _service.GetAll();
     }
@@ -42,8 +42,12 @@ public class TankController : ControllerBase
     [HttpPost]
     public IActionResult Create(Tank newTank)
     {
-        var tank = _service.Create(newTank);
-        return CreatedAtAction(nameof(GetById), new { id = tank!.Id }, tank);
+        if (newTank is null)
+        {
+            throw new InvalidOperationException("Not exist tank's parameters");
+        }
+            var tank = _service.Create(newTank);
+            return CreatedAtAction(nameof(GetById), new { id = tank!.Id }, tank);   
     }
 
 
